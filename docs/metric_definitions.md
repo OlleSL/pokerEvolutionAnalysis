@@ -1,6 +1,6 @@
 # Metric Definitions
 
-**Purpose:** Rulebook for turning parsed `actions` / `players` / `hands` into statistics. Implemented in DuckDB SQL or Python using [`parquet_schema.md`](parquet_schema.md).
+**Purpose:** Rulebook for turning parsed `actions` / `players` / `hands` into statistics. Implemented in DuckDB SQL or Python using `[parquet_schema.md](parquet_schema.md)`.
 
 **Status:** Core metrics defined (2026-08-11).
 
@@ -8,25 +8,30 @@
 
 ## Global conventions
 
-### Streets
+### Streets 
+
 - `preflop` — before flop is dealt
 - `flop`, `turn`, `river` — after board cards for that street
 
 ### Action order
+
 - Use `action_index` from the `actions` table (ascending).
 - Blind posts (`post_sb`, `post_bb`) happen first preflop.
 
 ### Stake-aware amounts (NL50 / NL200 / NL5K)
 
-Hand histories do **not** say “1 BB” — they use dollar amounts. All preflop price logic must use the **`bb` value parsed from that hand** (from `hands.bb`).
+Hand histories do **not** say “1 BB” — they use dollar amounts. All preflop price logic must use the `**bb` value parsed from that hand** (from `hands.bb`).
 
-| Concept | Implementation |
-|---------|----------------|
-| “1 BB” / limp level | `amount <= bb` (call BB) |
-| “Above 1 BB” / raise | `amount > bb` (or raise action type) |
-| Open sizing | First raise where total to-call exceeds `bb` |
+
+| Concept              | Implementation                               |
+| -------------------- | -------------------------------------------- |
+| “1 BB” / limp level  | `amount <= bb` (call BB)                     |
+| “Above 1 BB” / raise | `amount > bb` (or raise action type)         |
+| Open sizing          | First raise where total to-call exceeds `bb` |
+
 
 **Examples:**
+
 - NL50: `bb = 0.50` — limp/call BB is $0.50; raise to $1.25 is > 1 BB
 - NL200: `bb = 2.00`
 - NL5K: `bb = 50.00`
@@ -37,12 +42,14 @@ Never hard-code blind sizes; always join `hands.bb` for the hand.
 
 **Table type:** 6-max tables only (from hand history header).
 
-**`num_players_dealt`:** Store on every hand. Use for analysis filters:
+`**num_players_dealt`:** Store on every hand. Use for analysis filters:
 
-| Filter | When to use |
-|--------|-------------|
+
+| Filter                  | When to use                                                       |
+| ----------------------- | ----------------------------------------------------------------- |
 | `num_players_dealt = 6` | Primary analysis — positional stats, matchups, population metrics |
-| `num_players_dealt < 6` | Exclude by default; optional secondary analysis only |
+| `num_players_dealt < 6` | Exclude by default; optional secondary analysis only              |
+
 
 Shorthanded tables play differently; filtering to 6 dealt keeps statistics clean. Parser keeps all hands; queries apply the filter.
 
@@ -52,13 +59,15 @@ Use **LJ, HJ, CO, BTN, SB, BB** (not UTG/MP).
 
 When fewer than 6 players are dealt, drop positions from the **left**:
 
-| Players dealt | Positions |
-|---------------|-----------|
-| 6 | LJ, HJ, CO, BTN, SB, BB |
-| 5 | HJ, CO, BTN, SB, BB |
-| 4 | CO, BTN, SB, BB |
-| 3 | BTN, SB, BB |
-| 2 | SB, BB |
+
+| Players dealt | Positions               |
+| ------------- | ----------------------- |
+| 6             | LJ, HJ, CO, BTN, SB, BB |
+| 5             | HJ, CO, BTN, SB, BB     |
+| 4             | CO, BTN, SB, BB         |
+| 3             | BTN, SB, BB             |
+| 2             | SB, BB                  |
+
 
 Assign relative to button and seats actually dealt in.
 
@@ -71,11 +80,13 @@ Assign relative to button and seats actually dealt in.
 **Intent:** Player voluntarily puts additional money in preflop beyond forced blinds.
 
 **Counts as VPIP:**
+
 - Call/limp beyond forced blind (putting money in beyond SB/BB post)
 - Any preflop raise
 - All-in call or raise preflop (when voluntary)
 
 **Does NOT count:**
+
 - Fold preflop
 - SB/BB posting forced blinds only with no further money
 - BB checking when limped to (no extra money beyond BB)
@@ -89,11 +100,13 @@ Assign relative to button and seats actually dealt in.
 **Intent:** Player increases the bet size **preflop only**.
 
 **Counts as PFR:**
+
 - Any preflop raise (open, 3-bet, 4-bet, 5-bet+, etc.)
 - Preflop re-raise chains on the same street
 - All-in preflop when it constitutes a raise
 
 **Does NOT count:**
+
 - Postflop bets or raises (use c-bet / barrel stats)
 - Limp (call without raise)
 - Call facing raise
@@ -106,10 +119,12 @@ Assign relative to button and seats actually dealt in.
 **Intent:** First player to make the price **greater than 1 BB** (`amount > hands.bb`).
 
 **Counts as RFI:**
+
 - First raise above BB — **including over limpers**
 - Example: limp, then raise → counts as RFI for the raiser
 
 **Does NOT count:**
+
 - Limp (call at BB level)
 - Call facing existing raise
 - Blind posts alone
@@ -123,9 +138,11 @@ Assign relative to button and seats actually dealt in.
 **Intent:** Replaces “steal.” All players before hero folded (no limps, no raises); hero is first to act with money.
 
 **Counts as RFI when folded to:**
+
 - Folded to player and they raise to **> hands.bb**
 
 **Does NOT count:**
+
 - Limp when folded to
 - Action when prior player limped or raised
 
@@ -138,11 +155,13 @@ Assign relative to button and seats actually dealt in.
 **Intent:** **Separate stat from 4-bet.** First re-raise over an open raise (pot already has one raise above BB).
 
 **Counts as 3-bet:**
+
 - Raise facing exactly one prior raise (the open)
 - Squeeze: open + caller(s), then raise → still a **3-bet**  
-  Example: HJ opens, CO calls, BTN raises → BTN 3-bet
+Example: HJ opens, CO calls, BTN raises → BTN 3-bet
 
 **Does NOT count:**
+
 - Open raise (RFI)
 - 4-bet (separate stat below)
 - Call facing raise
@@ -156,9 +175,11 @@ Assign relative to button and seats actually dealt in.
 **Intent:** **Separate stat from 3-bet.** Additional raise **on top of** an existing 3-bet.
 
 **Counts as 4-bet:**
+
 - Raise facing a 3-bet (re-raise over the 3-bettor)
 
 **Does NOT count:**
+
 - 3-bet
 - 5-bet+ — track as 4-bet+ or separate bucket if needed later
 
@@ -171,9 +192,11 @@ Assign relative to button and seats actually dealt in.
 **Intent:** Player **calls** (does not fold or re-raise) when facing a 3-bet.
 
 **Opportunity:**
+
 - Player faces a 3-bet (typically the original opener facing BTN/CO 3-bet, or cold-call spot facing open + 3-bet — define per analysis slice)
 
 **Primary spot (recommended):**
+
 - Player **made the open raise** (RFI / > BB)
 - Faces a 3-bet
 - **Calls** the 3-bet
@@ -189,6 +212,7 @@ Assign relative to button and seats actually dealt in.
 **Intent:** Player **calls** when facing a 4-bet.
 
 **Opportunity:**
+
 - Player **made the 3-bet**
 - Faces a 4-bet
 
@@ -217,6 +241,7 @@ Assign relative to button and seats actually dealt in.
 ---
 
 ### Removed metrics
+
 - **Steal** — use **RFI when folded to**
 - **Squeeze** — not separate; squeeze spots count as **3-bet**
 
@@ -263,6 +288,7 @@ Assign relative to button and seats actually dealt in.
 **Intent:** PFA bets **flop and turn** (when opportunity exists on both streets).
 
 **Counts as double barrel:**
+
 - PFA bets flop **and** PFA bets turn
 
 **Opportunity:** Flop and turn reached; PFA was flop bettor and faces turn.
@@ -278,6 +304,7 @@ Assign relative to button and seats actually dealt in.
 **Intent:** PFA bets **flop, turn, and river** (when opportunity exists on each street).
 
 **Counts as triple barrel:**
+
 - PFA bets flop, turn, **and** river
 
 **Opportunity:** All three postflop streets reached with PFA betting each.
@@ -289,6 +316,7 @@ Assign relative to button and seats actually dealt in.
 **Per street.**
 
 **Counts as fold to c-bet:**
+
 - Player is **not** the PFA
 - PFA bets that street
 - Player folds
@@ -300,6 +328,7 @@ Assign relative to button and seats actually dealt in.
 ### Check-raise (flop / turn / river)
 
 **Counts as check-raise:**
+
 - Player checks
 - Another player bets
 - Player raises
@@ -309,6 +338,7 @@ Assign relative to button and seats actually dealt in.
 ---
 
 ### Deferred
+
 - **Aggression factor** — skipped for now
 
 ---
@@ -316,11 +346,13 @@ Assign relative to button and seats actually dealt in.
 ## Positional & matchup stats
 
 ### BTN vs BB
+
 - BTN RFI / RFI when folded to
 - BB fold, call, 3-bet vs BTN open (> BB)
 - Postflop: check-raise, fold to c-bet, etc.
 
 ### SB vs BB
+
 - SB RFI / RFI when folded to
 - BB response vs SB open
 
@@ -350,12 +382,12 @@ Filter `num_players_dealt = 6` when running stake/year comparisons if desired.
 
 ## Implementation checklist
 
-- [ ] Join `hands.bb` for all preflop price thresholds (never hard-code stakes)
-- [ ] Store `num_players_dealt`; default filter `= 6` for positional analysis
-- [ ] 3-bet and 4-bet as **separate** opportunity/numerator pairs
-- [ ] Add call 3-bet, call 4-bet, fold to 4-bet
-- [ ] Double barrel and triple barrel as **separate** stats
-- [ ] PFR: preflop only
+- Join `hands.bb` for all preflop price thresholds (never hard-code stakes)
+- Store `num_players_dealt`; default filter `= 6` for positional analysis
+- 3-bet and 4-bet as **separate** opportunity/numerator pairs
+- Add call 3-bet, call 4-bet, fold to 4-bet
+- Double barrel and triple barrel as **separate** stats
+- PFR: preflop only
 
 ---
 
