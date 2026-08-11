@@ -1,0 +1,39 @@
+# Hand history data (large — keep local only)
+NL50/
+NL200/
+NL5K/
+data/raw/
+data/parsed/
+
+# Nested archives inside dataset folders
+**/*.zip
+**/*.rar
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.dist-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Environment
+.env
+.env.*
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Long-running job logs (results JSON/CSV in reports/ are kept)
+reports/hand_count_run.log
