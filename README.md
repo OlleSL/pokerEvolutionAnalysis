@@ -10,8 +10,10 @@ This project analyzes population-level and player-level strategic change over ti
 
 | File | Purpose |
 |------|---------|
-| [`scope.md`](scope.md) | Boundaries, inclusion rules, RQs, deliverables |
-| [`outline.md`](outline.md) | Full study outline + work tracker |
+| [`scope.md`](scope.md) | Boundaries, inclusion rules, RQs |
+| [`outline.md`](outline.md) | Study outline + work tracker |
+| [`docs/parquet_schema.md`](docs/parquet_schema.md) | Parser output tables (hands, players, actions) |
+| [`docs/metric_definitions.md`](docs/metric_definitions.md) | VPIP, PFR, c-bet rules — **you fill this in** |
 
 ## Data
 

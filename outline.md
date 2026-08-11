@@ -338,7 +338,8 @@ Academic papers, books, datasets, software documentation.
 | Task | Status | Notes |
 |------|--------|-------|
 | Evaluate/build PokerStars parser | Not started | |
-| Define schema (§3.5) | Not started | |
+| Define schema (§3.5) | Done | [`docs/parquet_schema.md`](docs/parquet_schema.md) |
+| Metric definitions (Appendix B) | Done | [`docs/metric_definitions.md`](docs/metric_definitions.md) |
 | Pilot parse (1 year × 3 stakes) | Not started | |
 | Full-corpus parse → Parquet | Not started | |
 | Load into DuckDB | Not started | |

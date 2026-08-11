@@ -4,7 +4,7 @@ Usage:
   python scripts/count_hands.py                  # full corpus (slow: ~2-4 hours)
   python scripts/count_hands.py --dataset NL50   # one dataset
   python scripts/count_hands.py --year 2018      # one year across datasets
-  python scripts/count_hands.py --quick          # one random file per year/dataset
+  python scripts/count_hands.py --sequence       # NL5K → NL50 → NL200 with checkpoints
 
 Writes:
   reports/hand_counts.json
@@ -163,6 +163,65 @@ def run_count(
     return result
 
 
+def bucket_from_dict(d: dict[str, int]) -> CountBucket:
+    return CountBucket(
+        total=d.get("total", 0),
+        usd=d.get("usd", 0),
+        non_usd=d.get("non_usd", 0),
+        cap=d.get("cap", 0),
+        non_cap=d.get("non_cap", 0),
+        included=d.get("included", 0),
+    )
+
+
+def load_existing_result(json_path: Path) -> CountResult | None:
+    if not json_path.exists():
+        return None
+    data = json.loads(json_path.read_text(encoding="utf-8"))
+    result = CountResult()
+    result.files_processed = data.get("files_processed", 0)
+    result.files_skipped = data.get("files_skipped_empty", 0)
+    result.elapsed_seconds = data.get("elapsed_minutes", 0) * 60
+    for row in data.get("by_dataset_year", []):
+        ds, year = row["dataset"], row["year"]
+        result.by_dataset_year.setdefault(ds, {})[year] = bucket_from_dict(row)
+    return result
+
+
+def merge_dataset_into(existing: CountResult | None, new: CountResult, dataset: str) -> CountResult:
+    merged = CountResult()
+    if existing:
+        for ds, years in existing.by_dataset_year.items():
+            if ds != dataset:
+                merged.by_dataset_year[ds] = dict(years)
+        merged.files_processed = existing.files_processed
+        merged.files_skipped = existing.files_skipped
+        merged.elapsed_seconds = existing.elapsed_seconds
+        if dataset in existing.by_dataset_year:
+            merged.files_processed -= len(list((PROJECT_ROOT / dataset).rglob("*.txt")))
+    merged.by_dataset_year[dataset] = dict(new.by_dataset_year.get(dataset, {}))
+    merged.files_processed += new.files_processed
+    merged.files_skipped += new.files_skipped
+    merged.elapsed_seconds += new.elapsed_seconds
+    return merged
+
+
+def run_sequence(datasets: list[str]) -> CountResult:
+    merged = CountResult()
+    for ds in datasets:
+        files = iter_files(dataset=ds)
+        est_min = len(files) / 43 / 60 if files else 0
+        print(f"\n=== {ds}: {len(files):,} files (~{est_min:.0f} min) ===", flush=True)
+        partial = run_count(files)
+        if merged.by_dataset_year:
+            merged = merge_dataset_into(merged, partial, ds)
+        else:
+            merged = partial
+        write_outputs(summarize(merged))
+        print_summary(summarize(merged))
+    return merged
+
+
 def summarize(result: CountResult) -> dict:
     rows = []
     totals = CountBucket()
@@ -238,8 +297,15 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Exact hand counts with inclusion breakdown")
     parser.add_argument("--dataset", choices=DATASETS, help="Limit to one dataset")
     parser.add_argument("--year", help="Limit to one year folder (e.g. 2018)")
+    parser.add_argument("--sequence", action="store_true", help="Run NL5K, NL50, NL200 in order with checkpoints")
     parser.add_argument("--quick", action="store_true", help="One random file per year per dataset")
     args = parser.parse_args()
+
+    json_path = PROJECT_ROOT / "reports" / "hand_counts.json"
+
+    if args.sequence:
+        run_sequence(["NL5K", "NL50", "NL200"])
+        return
 
     if args.quick:
         files = quick_files()
@@ -251,6 +317,9 @@ def main() -> None:
             print("  Full corpus — expect roughly 2-4 hours depending on disk speed.")
 
     result = run_count(files)
+    if args.dataset:
+        existing = load_existing_result(json_path)
+        result = merge_dataset_into(existing, result, args.dataset)
     summary = summarize(result)
     write_outputs(summary)
     print_summary(summary)

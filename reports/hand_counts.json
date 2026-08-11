@@ -1,0 +1,386 @@
+{
+  "study_years": [
+    "2011",
+    "2012",
+    "2013",
+    "2014",
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "2025"
+  ],
+  "inclusion_rules": {
+    "currency": "USD only",
+    "cap_games": "excluded",
+    "table_size": "6-max (to verify in parser)",
+    "study_window": "2011-2025"
+  },
+  "files_processed": 147461,
+  "files_skipped_empty": 9,
+  "elapsed_minutes": 44.6,
+  "totals": {
+    "total": 30652863,
+    "usd": 30212400,
+    "non_usd": 440463,
+    "cap": 5139476,
+    "non_cap": 25513387,
+    "included": 23799246
+  },
+  "by_dataset_year": [
+    {
+      "dataset": "NL50",
+      "year": "2010",
+      "total": 1311910,
+      "usd": 1273678,
+      "non_usd": 38232,
+      "cap": 0,
+      "non_cap": 1311910,
+      "included": 0
+    },
+    {
+      "dataset": "NL50",
+      "year": "2011",
+      "total": 1382417,
+      "usd": 1382417,
+      "non_usd": 0,
+      "cap": 0,
+      "non_cap": 1382417,
+      "included": 1382417
+    },
+    {
+      "dataset": "NL50",
+      "year": "2012",
+      "total": 1431238,
+      "usd": 1431238,
+      "non_usd": 0,
+      "cap": 649982,
+      "non_cap": 781256,
+      "included": 781256
+    },
+    {
+      "dataset": "NL50",
+      "year": "2013",
+      "total": 1723861,
+      "usd": 1658683,
+      "non_usd": 65178,
+      "cap": 426745,
+      "non_cap": 1297116,
+      "included": 1231938
+    },
+    {
+      "dataset": "NL50",
+      "year": "2014",
+      "total": 1174317,
+      "usd": 1101575,
+      "non_usd": 72742,
+      "cap": 208,
+      "non_cap": 1174109,
+      "included": 1101367
+    },
+    {
+      "dataset": "NL50",
+      "year": "2015",
+      "total": 1047006,
+      "usd": 981327,
+      "non_usd": 65679,
+      "cap": 0,
+      "non_cap": 1047006,
+      "included": 981327
+    },
+    {
+      "dataset": "NL50",
+      "year": "2016",
+      "total": 1506327,
+      "usd": 1500390,
+      "non_usd": 5937,
+      "cap": 0,
+      "non_cap": 1506327,
+      "included": 1500390
+    },
+    {
+      "dataset": "NL50",
+      "year": "2017",
+      "total": 1499047,
+      "usd": 1445607,
+      "non_usd": 53440,
+      "cap": 0,
+      "non_cap": 1499047,
+      "included": 1445607
+    },
+    {
+      "dataset": "NL50",
+      "year": "2018",
+      "total": 1482781,
+      "usd": 1436119,
+      "non_usd": 46662,
+      "cap": 0,
+      "non_cap": 1482781,
+      "included": 1436119
+    },
+    {
+      "dataset": "NL50",
+      "year": "2019",
+      "total": 1423765,
+      "usd": 1377308,
+      "non_usd": 46457,
+      "cap": 0,
+      "non_cap": 1423765,
+      "included": 1377308
+    },
+    {
+      "dataset": "NL50",
+      "year": "2020",
+      "total": 1419012,
+      "usd": 1419012,
+      "non_usd": 0,
+      "cap": 0,
+      "non_cap": 1419012,
+      "included": 1419012
+    },
+    {
+      "dataset": "NL50",
+      "year": "2021",
+      "total": 1442743,
+      "usd": 1423826,
+      "non_usd": 18917,
+      "cap": 0,
+      "non_cap": 1442743,
+      "included": 1423826
+    },
+    {
+      "dataset": "NL50",
+      "year": "2022",
+      "total": 1520202,
+      "usd": 1508583,
+      "non_usd": 11619,
+      "cap": 0,
+      "non_cap": 1520202,
+      "included": 1508583
+    },
+    {
+      "dataset": "NL50",
+      "year": "2023",
+      "total": 1492225,
+      "usd": 1476625,
+      "non_usd": 15600,
+      "cap": 0,
+      "non_cap": 1492225,
+      "included": 1476625
+    },
+    {
+      "dataset": "NL50",
+      "year": "2024",
+      "total": 1406494,
+      "usd": 1406494,
+      "non_usd": 0,
+      "cap": 0,
+      "non_cap": 1406494,
+      "included": 1406494
+    },
+    {
+      "dataset": "NL50",
+      "year": "2025",
+      "total": 1439863,
+      "usd": 1439863,
+      "non_usd": 0,
+      "cap": 0,
+      "non_cap": 1439863,
+      "included": 1439863
+    },
+    {
+      "dataset": "NL5K",
+      "year": "2011",
+      "total": 2563896,
+      "usd": 2563896,
+      "non_usd": 0,
+      "cap": 2235949,
+      "non_cap": 327947,
+      "included": 327947
+    },
+    {
+      "dataset": "NL5K",
+      "year": "2012",
+      "total": 1269336,
+      "usd": 1269336,
+      "non_usd": 0,
+      "cap": 940476,
+      "non_cap": 328860,
+      "included": 328860
+    },
+    {
+      "dataset": "NL5K",
+      "year": "2013",
+      "total": 1290929,
+      "usd": 1290929,
+      "non_usd": 0,
+      "cap": 586478,
+      "non_cap": 704451,
+      "included": 704451
+    },
+    {
+      "dataset": "NL5K",
+      "year": "2014",
+      "total": 919758,
+      "usd": 919758,
+      "non_usd": 0,
+      "cap": 299638,
+      "non_cap": 620120,
+      "included": 620120
+    },
+    {
+      "dataset": "NL5K",
+      "year": "2015",
+      "total": 448774,
+      "usd": 448774,
+      "non_usd": 0,
+      "cap": 0,
+      "non_cap": 448774,
+      "included": 448774
+    },
+    {
+      "dataset": "NL5K",
+      "year": "2016",
+      "total": 320283,
+      "usd": 320283,
+      "non_usd": 0,
+      "cap": 0,
+      "non_cap": 320283,
+      "included": 320283
+    },
+    {
+      "dataset": "NL5K",
+      "year": "2017",
+      "total": 314295,
+      "usd": 314295,
+      "non_usd": 0,
+      "cap": 0,
+      "non_cap": 314295,
+      "included": 314295
+    },
+    {
+      "dataset": "NL5K",
+      "year": "2018",
+      "total": 244475,
+      "usd": 244475,
+      "non_usd": 0,
+      "cap": 0,
+      "non_cap": 244475,
+      "included": 244475
+    },
+    {
+      "dataset": "NL5K",
+      "year": "2019",
+      "total": 171269,
+      "usd": 171269,
+      "non_usd": 0,
+      "cap": 0,
+      "non_cap": 171269,
+      "included": 171269
+    },
+    {
+      "dataset": "NL5K",
+      "year": "2020",
+      "total": 183977,
+      "usd": 183977,
+      "non_usd": 0,
+      "cap": 0,
+      "non_cap": 183977,
+      "included": 183977
+    },
+    {
+      "dataset": "NL5K",
+      "year": "2021",
+      "total": 80393,
+      "usd": 80393,
+      "non_usd": 0,
+      "cap": 0,
+      "non_cap": 80393,
+      "included": 80393
+    },
+    {
+      "dataset": "NL5K",
+      "year": "2022",
+      "total": 23685,
+      "usd": 23685,
+      "non_usd": 0,
+      "cap": 0,
+      "non_cap": 23685,
+      "included": 23685
+    },
+    {
+      "dataset": "NL5K",
+      "year": "2023",
+      "total": 36933,
+      "usd": 36933,
+      "non_usd": 0,
+      "cap": 0,
+      "non_cap": 36933,
+      "included": 36933
+    },
+    {
+      "dataset": "NL5K",
+      "year": "2024",
+      "total": 38646,
+      "usd": 38646,
+      "non_usd": 0,
+      "cap": 0,
+      "non_cap": 38646,
+      "included": 38646
+    },
+    {
+      "dataset": "NL5K",
+      "year": "2025",
+      "total": 43006,
+      "usd": 43006,
+      "non_usd": 0,
+      "cap": 0,
+      "non_cap": 43006,
+      "included": 43006
+    }
+  ],
+  "included_hands_matrix": {
+    "NL50": {
+      "2010": 0,
+      "2011": 1382417,
+      "2012": 781256,
+      "2013": 1231938,
+      "2014": 1101367,
+      "2015": 981327,
+      "2016": 1500390,
+      "2017": 1445607,
+      "2018": 1436119,
+      "2019": 1377308,
+      "2020": 1419012,
+      "2021": 1423826,
+      "2022": 1508583,
+      "2023": 1476625,
+      "2024": 1406494,
+      "2025": 1439863
+    },
+    "NL200": {},
+    "NL5K": {
+      "2011": 327947,
+      "2012": 328860,
+      "2013": 704451,
+      "2014": 620120,
+      "2015": 448774,
+      "2016": 320283,
+      "2017": 314295,
+      "2018": 244475,
+      "2019": 171269,
+      "2020": 183977,
+      "2021": 80393,
+      "2022": 23685,
+      "2023": 36933,
+      "2024": 38646,
+      "2025": 43006
+    }
+  }
+}
