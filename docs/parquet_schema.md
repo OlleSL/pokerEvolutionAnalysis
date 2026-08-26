@@ -46,6 +46,9 @@ One row per hand.
 | `bb` | float | Big blind in USD — **use for all RFI/3-bet/4-bet price logic** (never hard-code stake sizes) |
 | `is_usd` | bool | Parsed/filter flag |
 | `is_cap` | bool | Cap game flag |
+| `is_ante` | bool | Ante game flag (excluded from study) |
+| `is_included` | bool | USD, non-cap, non-ante, study window, 6-max |
+| `is_primary` | bool | `is_included` and `num_players_dealt = 6` |
 | `table_name` | string | Table name |
 | `max_players` | int | Table size (expect 6) |
 | `button_seat` | int | Dealer seat number |

@@ -22,16 +22,16 @@
     "table_size": "6-max (to verify in parser)",
     "study_window": "2011-2025"
   },
-  "files_processed": 147461,
-  "files_skipped_empty": 9,
-  "elapsed_minutes": 44.6,
+  "files_processed": 281014,
+  "files_skipped_empty": 11,
+  "elapsed_minutes": 85.7,
   "totals": {
-    "total": 30652863,
-    "usd": 30212400,
-    "non_usd": 440463,
-    "cap": 5139476,
-    "non_cap": 25513387,
-    "included": 23799246
+    "total": 50813434,
+    "usd": 49797384,
+    "non_usd": 1016050,
+    "cap": 6848189,
+    "non_cap": 43965245,
+    "included": 41675517
   },
   "by_dataset_year": [
     {
@@ -193,6 +193,156 @@
       "cap": 0,
       "non_cap": 1439863,
       "included": 1439863
+    },
+    {
+      "dataset": "NL200",
+      "year": "2011",
+      "total": 1136171,
+      "usd": 1136171,
+      "non_usd": 0,
+      "cap": 0,
+      "non_cap": 1136171,
+      "included": 1136171
+    },
+    {
+      "dataset": "NL200",
+      "year": "2012",
+      "total": 1454698,
+      "usd": 1454698,
+      "non_usd": 0,
+      "cap": 570293,
+      "non_cap": 884405,
+      "included": 884405
+    },
+    {
+      "dataset": "NL200",
+      "year": "2013",
+      "total": 1564813,
+      "usd": 1496606,
+      "non_usd": 68207,
+      "cap": 686156,
+      "non_cap": 878657,
+      "included": 810450
+    },
+    {
+      "dataset": "NL200",
+      "year": "2014",
+      "total": 1502009,
+      "usd": 1417370,
+      "non_usd": 84639,
+      "cap": 452264,
+      "non_cap": 1049745,
+      "included": 965106
+    },
+    {
+      "dataset": "NL200",
+      "year": "2015",
+      "total": 1428381,
+      "usd": 1300284,
+      "non_usd": 128097,
+      "cap": 0,
+      "non_cap": 1428381,
+      "included": 1300284
+    },
+    {
+      "dataset": "NL200",
+      "year": "2016",
+      "total": 1324085,
+      "usd": 1323665,
+      "non_usd": 420,
+      "cap": 0,
+      "non_cap": 1324085,
+      "included": 1323665
+    },
+    {
+      "dataset": "NL200",
+      "year": "2017",
+      "total": 1297937,
+      "usd": 1205736,
+      "non_usd": 92201,
+      "cap": 0,
+      "non_cap": 1297937,
+      "included": 1205736
+    },
+    {
+      "dataset": "NL200",
+      "year": "2018",
+      "total": 1351257,
+      "usd": 1246390,
+      "non_usd": 104867,
+      "cap": 0,
+      "non_cap": 1351257,
+      "included": 1246390
+    },
+    {
+      "dataset": "NL200",
+      "year": "2019",
+      "total": 1062286,
+      "usd": 1004630,
+      "non_usd": 57656,
+      "cap": 0,
+      "non_cap": 1062286,
+      "included": 1004630
+    },
+    {
+      "dataset": "NL200",
+      "year": "2020",
+      "total": 1360948,
+      "usd": 1360948,
+      "non_usd": 0,
+      "cap": 0,
+      "non_cap": 1360948,
+      "included": 1360948
+    },
+    {
+      "dataset": "NL200",
+      "year": "2021",
+      "total": 1378412,
+      "usd": 1361004,
+      "non_usd": 17408,
+      "cap": 0,
+      "non_cap": 1378412,
+      "included": 1361004
+    },
+    {
+      "dataset": "NL200",
+      "year": "2022",
+      "total": 1332334,
+      "usd": 1312917,
+      "non_usd": 19417,
+      "cap": 0,
+      "non_cap": 1332334,
+      "included": 1312917
+    },
+    {
+      "dataset": "NL200",
+      "year": "2023",
+      "total": 1309383,
+      "usd": 1306708,
+      "non_usd": 2675,
+      "cap": 0,
+      "non_cap": 1309383,
+      "included": 1306708
+    },
+    {
+      "dataset": "NL200",
+      "year": "2024",
+      "total": 1266026,
+      "usd": 1266026,
+      "non_usd": 0,
+      "cap": 0,
+      "non_cap": 1266026,
+      "included": 1266026
+    },
+    {
+      "dataset": "NL200",
+      "year": "2025",
+      "total": 1391831,
+      "usd": 1391831,
+      "non_usd": 0,
+      "cap": 0,
+      "non_cap": 1391831,
+      "included": 1391831
     },
     {
       "dataset": "NL5K",
@@ -364,7 +514,23 @@
       "2024": 1406494,
       "2025": 1439863
     },
-    "NL200": {},
+    "NL200": {
+      "2011": 1136171,
+      "2012": 884405,
+      "2013": 810450,
+      "2014": 965106,
+      "2015": 1300284,
+      "2016": 1323665,
+      "2017": 1205736,
+      "2018": 1246390,
+      "2019": 1004630,
+      "2020": 1360948,
+      "2021": 1361004,
+      "2022": 1312917,
+      "2023": 1306708,
+      "2024": 1266026,
+      "2025": 1391831
+    },
     "NL5K": {
       "2011": 327947,
       "2012": 328860,

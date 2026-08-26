@@ -36,4 +36,7 @@ Thumbs.db
 .vscode/
 
 # Long-running job logs (results JSON/CSV in reports/ are kept)
-reports/hand_count_run.log
+reports/*.log
+
+# DuckDB spill + metrics slice checkpoints (regenerated on demand)
+.tmp/

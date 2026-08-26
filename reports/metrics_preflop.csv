@@ -1,0 +1,4 @@
+dataset,three_bet_opps,three_bets,four_bet_opps,four_bets,fold_to_3bet_opps,fold_to_3bet_count,fold_to_4bet_opps,fold_to_4bet_count,three_bet_pct,four_bet_pct,fold_to_3bet_pct,fold_to_4bet_pct,call_3bet_pct
+NL200,22928535,1864312,2395872,74781,1890504,924142,310416,134110,8.13,3.12,48.88,43.2,
+NL50,25309538,1845574,2412429,64008,1880795,889391,286843,119938,7.29,2.65,47.29,41.81,
+NL5K,2791994,230423,283975,10861,232743,112392,40457,17680,8.25,3.82,48.29,43.7,

@@ -33,13 +33,13 @@ Raw archives live in `data/raw/`. Hand history folders are **gitignored** (too l
 - **Table size:** 6-max
 - Raw `.txt` files are never deleted
 
-## Pipeline (planned)
+## Pipeline
 
 ```
-raw .txt  →  Python parser (with filters)  →  Parquet  →  DuckDB  →  analysis
+raw .txt  →  parse_corpus.py  →  Parquet (data/parsed/)  →  compute_all_metrics.py  →  reports/
 ```
 
-**Current status:** Data extracted and under audit. Parser and Parquet layer not yet built.
+**Current status:** Full corpus parsed (22.3M primary hands). Metrics exported to `reports/metrics_*.csv`. Re-parse running after `net_won` parser fix.
 
 ## Setup
 
@@ -70,17 +70,22 @@ pip install -r requirements.txt
 ## Scripts
 
 ```powershell
-# Exact hand counts with USD / cap / included breakdown (~2–4 hrs full corpus)
-python scripts\count_hands.py
-python scripts\count_hands.py --dataset NL50
-python scripts\count_hands.py --quick
+# Pre-parse audits (outputs in reports/)
+python scripts/run_overnight_audits.py
+python scripts/plot_coverage_heatmap.py
 
-# Coverage heatmap (after hand count)
-python scripts\plot_coverage_heatmap.py
+# Parse full corpus → data/parsed/
+python scripts/parse_corpus.py
+python scripts/parse_corpus.py --force   # re-parse after parser fixes
 
-# Initial exploration audit
-python scripts\explore_data.py
+# Export all metrics → reports/metrics_*.csv
+python scripts/compute_all_metrics.py --path data/parsed --json
+
+# Validate metrics
+python scripts/validate_metrics.py --path data/parsed
 ```
+
+Power BI / visualization: load CSVs from `reports/`. Use `metrics_by_position.csv` for VPIP/PFR/RFI (not legacy sample files).
 
 Outputs go to `reports/`.
 
@@ -105,14 +110,13 @@ dataAnalysisProject/
 ## Status
 
 - [x] Download and extract all three datasets
-- [x] Spot-validate hand history format
-- [x] Initial data exploration
-- [ ] Exact hand counts + coverage heatmap (in progress)
-- [ ] Lock cap-game policy for NL5K
-- [ ] Sample parser with inclusion filters
-- [ ] Full parse to Parquet → DuckDB
+- [x] Pre-parse audits + coverage heatmaps
+- [x] Parser + full corpus Parquet (`data/parsed/`)
+- [x] Full-corpus metrics export (`reports/metrics_*.csv`)
+- [ ] Re-parse after net_won fix (in progress when triggered)
+- [ ] Power BI / visualization dashboards
 - [ ] Analysis (RQ1–RQ6)
 
 ---
 
-*Last updated: 2026-08-11*
+*Last updated: 2026-08-26*

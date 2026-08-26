@@ -16,6 +16,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 REPORT = PROJECT_ROOT / "reports" / "hand_counts.json"
+PLAYERS_DEALT = PROJECT_ROOT / "reports" / "players_dealt_counts.json"
 
 
 def load_matrix(field: str) -> tuple[list[str], list[str], list[list[int]]]:
@@ -74,6 +75,17 @@ def plot_heatmap(title: str, datasets: list[str], years: list[str], matrix: list
     print(f"Wrote {out_path}")
 
 
+def load_included_6_dealt_matrix() -> tuple[list[str], list[str], list[list[int]]]:
+    data = json.loads(PLAYERS_DEALT.read_text(encoding="utf-8"))
+    datasets = ["NL50", "NL200", "NL5K"]
+    years = [str(y) for y in range(2011, 2026)]
+    source: dict[str, dict[str, int]] = {}
+    for row in data.get("by_dataset_year", []):
+        source.setdefault(row["dataset"], {})[row["year"]] = row["included_6_dealt"]
+    matrix = [[source.get(ds, {}).get(y, 0) for y in years] for ds in datasets]
+    return datasets, years, matrix
+
+
 def main() -> None:
     if not REPORT.exists():
         print(f"Missing {REPORT}. Run scripts/count_hands.py first.")
@@ -97,6 +109,18 @@ def main() -> None:
         total,
         reports / "coverage_heatmap_total.png",
     )
+
+    if PLAYERS_DEALT.exists():
+        _, _, included_6 = load_included_6_dealt_matrix()
+        plot_heatmap(
+            "Primary analysis corpus (included + exactly 6 dealt)",
+            ds,
+            years,
+            included_6,
+            reports / "coverage_heatmap_included_6_dealt.png",
+        )
+    else:
+        print(f"Skipping 6-dealt heatmap — missing {PLAYERS_DEALT}. Run scripts/count_players_dealt.py.")
 
 
 if __name__ == "__main__":

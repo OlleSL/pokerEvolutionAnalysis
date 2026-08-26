@@ -1,0 +1,4 @@
+dataset,cbet_opps,cbets,flop_bettors,double_barrels,triple_barrels,fold_to_cbet_opps,fold_to_cbet_count,check_raise_flop_opps,check_raise_flop_count,check_raise_turn_opps,check_raise_turn_count,check_raise_river_opps,check_raise_river_count,cbet_pct,double_barrel_pct,fold_to_cbet_pct,check_raise_flop_pct,check_raise_turn_pct,check_raise_river_pct
+NL200,3773757,2074959,2074959,590080,140071,2370775,993469,2419120,220003,1079876,82589,548796,29287,54.98,28.44,41.9,9.09,7.65,5.34
+NL50,4359923,2340869,2340869,676016,162019,2708359,1183283,2943823,228619,1346189,99806,685408,32395,53.69,28.88,43.69,7.77,7.41,4.73
+NL5K,465771,273852,273852,74421,18623,311039,130435,295367,28147,123022,8926,64215,4065,58.8,27.18,41.94,9.53,7.26,6.33

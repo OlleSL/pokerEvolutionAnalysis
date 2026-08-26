@@ -76,6 +76,7 @@ Raw files are **never deleted**. Filters are applied during parsing.
 | **Study window** | **2011–2025** (2010 excluded — only NL50 has it) |
 | **Currency** | **USD only** — exclude EUR, GBP, and other non-USD |
 | **Game type** | **Exclude all cap games** — exclude `$X Cap` and NL5K cap tables |
+| **Ante games** | **Excluded** — any hand with `posts the ante` / `posts ante` (common at NL5K, ~2–3% at NL50/NL200) |
 | **Table size** | **6-max tables only** |
 | **Players dealt (primary analysis)** | **Exactly 6** — shorthanded hands excluded from main positional/matchup metrics (stored with flag for optional use) |
 | **Coverage balance** | Keep all years for all stakes even when volume differs; may **subsample** high-volume stake-years later so comparisons stay clean |

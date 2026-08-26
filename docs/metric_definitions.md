@@ -347,36 +347,33 @@ Example: HJ opens, CO calls, BTN raises → BTN 3-bet
 
 ### BTN vs BB
 
-- BTN RFI / RFI when folded to
-- BB fold, call, 3-bet vs BTN open (> BB)
-- Postflop: check-raise, fold to c-bet, etc.
+- BB first response facing a **BTN open raise** (fold / call / 3-bet)
+- Exported in `reports/metrics_matchups_by_year.csv` (`btn_bb_*` columns)
 
-### SB vs BB
+### SB first-in
 
-- SB RFI / RFI when folded to
-- BB response vs SB open
+- When folded to the SB: **raise / limp / fold**
+- Exported as `sb_raise_pct`, `sb_limp_pct`, `sb_fold_pct` in the same matchups file
 
----
+### BB defense
 
-## Outcome metrics
+- BB fold / call / 3-bet vs **any** open (LJ–SB)
+- Exported as `bb_fold_pct`, `bb_call_pct`, `bb_three_bet_pct`
 
-### bb/100
+### 3-bet sizing
 
-```
-bb/100 = (total_profit_in_BB / total_hands) × 100
-```
+- Size of 3-bet in big blinds (`amount / bb`)
+- `avg_3bet_size_bb`, `median_3bet_size_bb`, and average excluding large shoves (`< 8 BB`) in `metrics_3bet_sizing_by_year.csv`
 
-Where `total_profit_in_BB = sum(net_won / hands.bb)` per player.
+### River c-bet vs triple barrel
 
-**Include:** All hands dealt in (standard).
-
-Filter `num_players_dealt = 6` when running stake/year comparisons if desired.
-
----
+- **River c-bet:** preflop aggressor bets the river whenever the hand reaches the river (broader)
+- **Triple barrel:** preflop aggressor bets **flop and turn and river** (continuation chain only)
+- Both are useful; they answer different questions
 
 ### All-in EV
 
-**Status:** TBD — may skip initially.
+**Status:** Not implemented. Requires showdown equity (both players' hole cards + board) at the all-in moment. Anonymous hand histories often omit hole cards for folders, so all-in EV is sparse and biased toward showdown hands. Prefer bb/100 as the outcome supporting metric for now.
 
 ---
 
