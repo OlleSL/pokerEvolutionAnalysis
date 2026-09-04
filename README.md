@@ -36,10 +36,12 @@ Raw archives live in `data/raw/`. Hand history folders are **gitignored** (too l
 ## Pipeline
 
 ```
-raw .txt  →  parse_corpus.py  →  Parquet (data/parsed/)  →  compute_all_metrics.py  →  reports/
+raw .txt  →  parse_corpus.py  →  Parquet (data/parsed/)
+          →  compute_all_metrics.py / compute_extended_metrics.py / compute_player_year_metrics.py
+          →  reports/*.csv  →  Power BI
 ```
 
-**Current status:** Full corpus parsed (22.3M primary hands). Metrics exported to `reports/metrics_*.csv`. Re-parse running after `net_won` parser fix.
+**Current status:** Full corpus parsed (22.3M primary hands). Population + player-year metrics exported to `reports/metrics_*.csv` (CSV only; ready for Power BI).
 
 ## Setup
 
@@ -78,14 +80,32 @@ python scripts/plot_coverage_heatmap.py
 python scripts/parse_corpus.py
 python scripts/parse_corpus.py --force   # re-parse after parser fixes
 
-# Export all metrics → reports/metrics_*.csv
-python scripts/compute_all_metrics.py --path data/parsed --json
+# Population metrics → reports/metrics_*.csv
+python scripts/compute_all_metrics.py --path data/parsed
+python scripts/compute_extended_metrics.py --path data/parsed
+
+# Player-year panel (RQ3/RQ4)
+python scripts/compute_player_year_metrics.py --path data/parsed
 
 # Validate metrics
 python scripts/validate_metrics.py --path data/parsed
 ```
 
-Power BI / visualization: load CSVs from `reports/`. Use `metrics_by_position.csv` for VPIP/PFR/RFI (not legacy sample files).
+**Power BI import (CSV only):**
+
+| Table | File | Typical RQ |
+|-------|------|------------|
+| Overall | `metrics_overall.csv` | context |
+| By year | `metrics_by_year.csv` | RQ1 |
+| Preflop / postflop | `metrics_preflop.csv`, `metrics_postflop.csv` | RQ1 |
+| By position | `metrics_by_position.csv` | RQ2 |
+| Matchups | `metrics_matchups.csv` | RQ2 |
+| 3-bet sizing | `metrics_3bet_sizing.csv` | RQ1/RQ2 |
+| bb/100 | `metrics_bb100.csv` | supporting |
+| Monthly volume | `hand_counts_monthly.csv` | RQ5 context |
+| Player panel | `metrics_player_year.csv` | RQ3/RQ4 |
+| Homogeneity | `metrics_player_dispersion.csv` | RQ3 |
+| Stayers / YoY | `metrics_player_stayers.csv` | RQ4 |
 
 Outputs go to `reports/`.
 
@@ -113,9 +133,10 @@ dataAnalysisProject/
 - [x] Pre-parse audits + coverage heatmaps
 - [x] Parser + full corpus Parquet (`data/parsed/`)
 - [x] Full-corpus metrics export (`reports/metrics_*.csv`)
-- [ ] Re-parse after net_won fix (in progress when triggered)
+- [x] Player-year / dispersion / stayers exports
+- [ ] Optional re-parse after net_won polish (bb/100 only)
 - [ ] Power BI / visualization dashboards
-- [ ] Analysis (RQ1–RQ6)
+- [ ] Analysis (RQ1–RQ5)
 
 ---
 

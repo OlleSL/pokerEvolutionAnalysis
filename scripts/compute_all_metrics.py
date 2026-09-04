@@ -634,16 +634,11 @@ def write_outputs(con: duckdb.DuckDBPyConnection, out_dir: Path, write_json: boo
     outputs: dict[str, Path] = {}
     queries = {
         "metrics_overall.csv": SQL_OVERALL,
-        "metrics_by_position.csv": SQL_BY_POSITION,
         "metrics_by_year.csv": SQL_BY_YEAR,
-        "metrics_preflop.csv": SQL_PREFLOP,
-        "metrics_postflop.csv": SQL_POSTFLOP,
     }
 
     for filename, sql in queries.items():
         df = con.execute(sql).df()
-        if filename == "metrics_by_position.csv":
-            df = sort_by_position(df)
         path = out_dir / filename
         df.to_csv(path, index=False)
         outputs[filename] = path
@@ -739,10 +734,7 @@ def write_outputs_chunked(
     """Process dataset/year slices separately to stay within memory and disk limits."""
     slice_queries = {
         "metrics_overall.csv": SQL_OVERALL,
-        "metrics_by_position.csv": SQL_BY_POSITION,
         "metrics_by_year.csv": SQL_BY_YEAR,
-        "metrics_preflop.csv": SQL_PREFLOP,
-        "metrics_postflop.csv": SQL_POSTFLOP,
         "metrics_bb100_by_year": SQL_BB100_BY_YEAR,
     }
     parts: dict[str, list[pd.DataFrame]] = {k: [] for k in slice_queries}
@@ -758,9 +750,11 @@ def write_outputs_chunked(
             if resume:
                 cached = load_slice_checkpoint(ckpt, ds, year)
                 if cached is not None:
+                    # Older checkpoints may include tables we no longer export here
                     print(f"  {ds}/{year} (cached)", flush=True)
-                    for name, df in cached.items():
-                        parts[name].append(df)
+                    for name in slice_queries:
+                        if name in cached:
+                            parts[name].append(cached[name])
                     skipped += 1
                     continue
             print(f"  {ds}/{year}...", flush=True)
@@ -777,10 +771,7 @@ def write_outputs_chunked(
 
     combined = {
         "metrics_overall.csv": aggregate_overall(parts["metrics_overall.csv"]),
-        "metrics_by_position.csv": sort_by_position(aggregate_by_position(parts["metrics_by_position.csv"])),
         "metrics_by_year.csv": pd.concat(parts["metrics_by_year.csv"], ignore_index=True),
-        "metrics_preflop.csv": aggregate_preflop(parts["metrics_preflop.csv"]),
-        "metrics_postflop.csv": aggregate_postflop(parts["metrics_postflop.csv"]),
     }
     bb100 = compute_bb100_table(root, parts["metrics_bb100_by_year"])
 

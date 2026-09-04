@@ -1,11 +1,12 @@
 """Export extended metrics at dataset × year grain for Power BI.
 
-Adds / fixes what compute_all_metrics.py does not fully cover:
-  - Preflop (3-bet/4-bet/fold/call) by year — with working call_3bet_pct
-  - Postflop (c-bet, barrels, river c-bet, fold-to-cbet, XR) by year
-  - Matchups: BTN open → BB, SB first-in (raise/limp/fold), BB defense
-  - 3-bet sizing (average size in BB)
-  - VPIP/PFR/RFI by position × year
+Writes the standard strategy tables (yearly grain is the default):
+  - metrics_preflop.csv, metrics_postflop.csv, metrics_by_position.csv
+  - metrics_matchups.csv (BTN→BB, SB first-in, BB defense)
+  - metrics_3bet_sizing.csv
+
+All-time stake summaries stay in compute_all_metrics.py
+(metrics_overall.csv, metrics_by_year.csv, metrics_bb100.csv).
 
 Usage:
   python scripts/compute_extended_metrics.py --path data/parsed --json
@@ -541,11 +542,11 @@ def main() -> None:
         print(f"Cleared checkpoint: {ckpt}\n")
 
     queries = {
-        "metrics_preflop_by_year.csv": SQL_PREFLOP_YEAR,
-        "metrics_postflop_by_year.csv": SQL_POSTFLOP_YEAR,
-        "metrics_matchups_by_year.csv": SQL_MATCHUPS_YEAR,
-        "metrics_3bet_sizing_by_year.csv": SQL_THREEBET_SIZE_YEAR,
-        "metrics_by_position_year.csv": SQL_POSITION_YEAR,
+        "metrics_preflop.csv": SQL_PREFLOP_YEAR,
+        "metrics_postflop.csv": SQL_POSTFLOP_YEAR,
+        "metrics_matchups.csv": SQL_MATCHUPS_YEAR,
+        "metrics_3bet_sizing.csv": SQL_THREEBET_SIZE_YEAR,
+        "metrics_by_position.csv": SQL_POSITION_YEAR,
     }
     parts: dict[str, list[pd.DataFrame]] = {k: [] for k in queries}
     resume = not args.no_resume
@@ -590,7 +591,7 @@ def main() -> None:
     pos_order = {p: i for i, p in enumerate(("LJ", "HJ", "CO", "BTN", "SB", "BB"))}
     for filename, frames in parts.items():
         df = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
-        if filename == "metrics_by_position_year.csv" and not df.empty:
+        if filename == "metrics_by_position.csv" and not df.empty:
             df = df.assign(_ord=df["position"].map(pos_order)).sort_values(
                 ["dataset", "year", "_ord"]
             ).drop(columns=["_ord"])
@@ -604,7 +605,8 @@ def main() -> None:
         "path": str(root.resolve()),
         "output_files": {k: str(v.resolve()) for k, v in sorted(outputs.items())},
         "notes": [
-            "All tables are dataset x year (position tables also include position).",
+            "Standard grain is dataset x year (position tables also include position).",
+            "metrics_overall.csv / metrics_bb100 overall rows are the only all-time stake summaries.",
             "BTN-BB: BB first response facing BTN open raise.",
             "SB first-in: SB raise/limp/fold when folded to.",
             "BB defense: BB fold/call/3-bet vs any open (LJ-SB).",

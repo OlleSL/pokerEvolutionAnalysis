@@ -348,7 +348,7 @@ Example: HJ opens, CO calls, BTN raises → BTN 3-bet
 ### BTN vs BB
 
 - BB first response facing a **BTN open raise** (fold / call / 3-bet)
-- Exported in `reports/metrics_matchups_by_year.csv` (`btn_bb_*` columns)
+- Exported in `reports/metrics_matchups.csv` (`btn_bb_*` columns)
 
 ### SB first-in
 
@@ -363,7 +363,7 @@ Example: HJ opens, CO calls, BTN raises → BTN 3-bet
 ### 3-bet sizing
 
 - Size of 3-bet in big blinds (`amount / bb`)
-- `avg_3bet_size_bb`, `median_3bet_size_bb`, and average excluding large shoves (`< 8 BB`) in `metrics_3bet_sizing_by_year.csv`
+- `avg_3bet_size_bb`, `median_3bet_size_bb`, and average excluding large shoves (`< 8 BB`) in `metrics_3bet_sizing.csv`
 
 ### River c-bet vs triple barrel
 
@@ -374,6 +374,20 @@ Example: HJ opens, CO calls, BTN raises → BTN 3-bet
 ### All-in EV
 
 **Status:** Not implemented. Requires showdown equity (both players' hole cards + board) at the all-in moment. Anonymous hand histories often omit hole cards for folders, so all-in EV is sparse and biased toward showdown hands. Prefer bb/100 as the outcome supporting metric for now.
+
+---
+
+## Player-year panel (RQ3 / RQ4)
+
+Exported by `scripts/compute_player_year_metrics.py` (default `min_hands=500`, stayers `min_years=3`).
+
+| File | Grain | Use |
+|------|-------|-----|
+| `metrics_player_year.csv` | player × dataset × year | Individual rates + bb/100 |
+| `metrics_player_dispersion.csv` | dataset × year × metric | Mean / SD / IQR of player rates (homogeneity) |
+| `metrics_player_stayers.csv` | player × dataset × year | Multi-year players with YoY deltas (`d_*`) |
+
+Rates included: VPIP, PFR, 3-bet, fold-to-3bet, BB defense (fold/call/3-bet), c-bet, bb/100.
 
 ---
 

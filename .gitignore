@@ -38,5 +38,8 @@ Thumbs.db
 # Long-running job logs (results JSON/CSV in reports/ are kept)
 reports/*.log
 
+# JSON twins of CSV reports (Power BI uses CSV only)
+reports/*.json
+
 # DuckDB spill + metrics slice checkpoints (regenerated on demand)
 .tmp/
