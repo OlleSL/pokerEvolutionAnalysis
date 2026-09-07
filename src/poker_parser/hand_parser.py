@@ -134,10 +134,17 @@ def _compute_net_won(
     block: str,
 ) -> dict[str, float]:
     collected: dict[str, float] = {n: 0.0 for n in player_names}
+    collected_inline: set[str] = set()
     street_invested: dict[str, float] = {n: 0.0 for n in player_names}
     total_invested: dict[str, float] = {n: 0.0 for n in player_names}
     returned: dict[str, float] = {n: 0.0 for n in player_names}
     current_street = "preflop"
+
+    def _add_summary_collected(name: str, amt: float) -> None:
+        # Summary repeats the same pot as "X collected $Y from pot". Count it
+        # only when the body had no inline collected line (some histories omit it).
+        if name in collected and name not in collected_inline:
+            collected[name] += amt
 
     for line in block.splitlines():
         line = line.strip()
@@ -146,6 +153,7 @@ def _compute_net_won(
             name, amt = cm.group(1).strip(), float(cm.group(2))
             if name in collected:
                 collected[name] += amt
+                collected_inline.add(name)
         rm = RETURNED.match(line)
         if rm:
             amt, name = float(rm.group(1)), rm.group(2).strip()
@@ -154,20 +162,17 @@ def _compute_net_won(
         wm = SUMMARY_WON.match(line)
         if wm:
             name, amt = _clean_summary_name(wm.group(1)), float(wm.group(2))
-            if name in collected:
-                collected[name] += amt
+            _add_summary_collected(name, amt)
             continue
         wm2 = SUMMARY_WON_SIMPLE.match(line)
         if wm2:
             name, amt = _clean_summary_name(wm2.group(1)), float(wm2.group(2))
-            if name in collected:
-                collected[name] += amt
+            _add_summary_collected(name, amt)
             continue
         sm = SUMMARY_COLLECTED.match(line)
         if sm:
             name, amt = _clean_summary_name(sm.group(1)), float(sm.group(2))
-            if name in collected:
-                collected[name] += amt
+            _add_summary_collected(name, amt)
             continue
 
     for a in actions:

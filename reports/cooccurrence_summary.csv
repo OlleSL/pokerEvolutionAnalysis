@@ -1,0 +1,4 @@
+dataset,primary_hands,n_players,n_players_min_hands,n_pairs_slice_min,n_pairs_ge_100,n_pairs_ge_200,n_pairs_ge_500,n_pairs_ge_1000,n_pairs_ge_5000,max_shared_hands,p50_shared,p90_shared,p99_shared,top100_pair_hands_pct,top1pct_pairs_hands_pct
+NL200,9893164,106983,9264,2251016,300445,127311,38144,12902,253,17618.0,26.0,126.0,708.0,0.63,21.05
+NL50,11270845,175935,15114,3834973,331069,102918,17529,3206,13,9955.0,23.0,91.0,341.0,0.24,13.63
+NL5K,1116765,5932,1079,114731,33103,17038,6004,2456,161,57605.0,46.0,288.0,1708.7,6.54,24.4
