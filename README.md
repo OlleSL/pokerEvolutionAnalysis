@@ -13,7 +13,9 @@ This project analyzes population-level and player-level strategic change over ti
 | [`scope.md`](scope.md) | Boundaries, inclusion rules, RQs |
 | [`outline.md`](outline.md) | Study outline + work tracker |
 | [`docs/parquet_schema.md`](docs/parquet_schema.md) | Parser output tables (hands, players, actions) |
-| [`docs/metric_definitions.md`](docs/metric_definitions.md) | VPIP, PFR, c-bet rules — **you fill this in** |
+| [`docs/metric_definitions.md`](docs/metric_definitions.md) | VPIP, PFR, c-bet rules |
+| [`docs/results_draft.md`](docs/results_draft.md) | Draft findings RQ1–RQ6 (CSV-grounded) |
+| [`docs/rq6_timeline.md`](docs/rq6_timeline.md) | External eras + statistical break years |
 
 ## Data
 
@@ -65,7 +67,8 @@ pip install -r requirements.txt
 | pandas | Data manipulation |
 | pyarrow | Parquet I/O |
 | duckdb | SQL analytics |
-| matplotlib | Coverage heatmaps |
+| matplotlib | Coverage heatmaps + survivorship figures |
+| scikit-learn | Breakpoint OLS / exploratory clustering |
 | jupyter | Notebooks |
 | tqdm | Progress bars |
 
@@ -89,6 +92,9 @@ python scripts/compute_player_year_metrics.py --path data/parsed
 
 # Validate metrics
 python scripts/validate_metrics.py --path data/parsed
+
+# RQ5 survivorship + RQ4 bb100 dispersion + RQ6 breakpoints (CSV-only; no Parquet)
+python scripts/compute_survivorship.py --figures
 ```
 
 **Power BI import (CSV only):**
@@ -105,7 +111,10 @@ python scripts/validate_metrics.py --path data/parsed
 | Monthly volume | `hand_counts_monthly.csv` | RQ5 context |
 | Player panel | `metrics_player_year.csv` | RQ3/RQ4 |
 | Homogeneity | `metrics_player_dispersion.csv` | RQ3 |
-| Stayers / YoY | `metrics_player_stayers.csv` | RQ4 |
+| Stayers / YoY | `metrics_player_stayers.csv` | RQ5 adaptation |
+| Survivorship | `metrics_survivorship_summary.csv`, `metrics_survivorship_by_era.csv` | RQ5 |
+| bb/100 dispersion | `metrics_bb100_dispersion.csv` | RQ4 |
+| Breakpoints | `rq6_breakpoints.csv` | RQ6 |
 
 Outputs go to `reports/`.
 
@@ -134,10 +143,13 @@ dataAnalysisProject/
 - [x] Parser + full corpus Parquet (`data/parsed/`)
 - [x] Full-corpus metrics export (`reports/metrics_*.csv`)
 - [x] Player-year / dispersion / stayers exports
-- [ ] Optional re-parse after net_won polish (bb/100 only)
+- [x] RQ5 survivorship + RQ6 breakpoints (`scripts/compute_survivorship.py`)
+- [x] Draft results + RQ6 timeline (`docs/results_draft.md`, `docs/rq6_timeline.md`)
+- [ ] Optional local re-parse after net_won polish (bb/100; NL50 player bb100 unreliable)
+- [ ] All-in EV (deferred — needs hole cards)
 - [ ] Power BI / visualization dashboards
-- [ ] Analysis (RQ1–RQ5)
+- [ ] Final write-up (discussion / conclusions)
 
 ---
 
-*Last updated: 2026-08-26*
+*Last updated: 2026-09-08*

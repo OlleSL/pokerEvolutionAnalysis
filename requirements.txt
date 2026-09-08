@@ -7,6 +7,9 @@ numpy>=1.26
 # Visualization & reporting
 matplotlib>=3.8
 
+# Exploratory analysis (survivorship, breakpoints, clustering)
+scikit-learn>=1.4
+
 # Notebooks (EDA + results)
 jupyter>=1.0
 ipykernel>=6.29

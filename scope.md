@@ -2,8 +2,8 @@
 
 **Project:** Longitudinal Evolution of Online No-Limit Hold'em Strategy  
 **Workspace:** `C:\Users\olles\code\dataAnalysisProject`  
-**Last updated:** 2026-08-11  
-**Status:** Data acquisition and extraction complete; analysis not yet started
+**Last updated:** 2026-09-08  
+**Status:** Full corpus parsed; population + player-year metrics exported to `reports/`. Exploratory analysis underway (RQ1–RQ6 draft findings in `docs/results_draft.md`). Remaining gaps: all-in EV deferred (no hole cards); NL50/`net_won` bb100 polish is a **local** Parquet re-parse task.
 
 ---
 
@@ -151,12 +151,17 @@ Full detail: [`outline.md`](./outline.md) §4.
 |-------------|-------------|--------|
 | Raw data (extracted) | Three dataset folders with `.txt` hand histories | **Done** |
 | `scope.md` / `outline.md` | Project scope and study outline | **Done** |
-| Data audit & cleaning report | Hand counts, duplicates, corrupted/incomplete hands | Not started |
-| Parsing pipeline | Raw → Parquet with documented schema | Not started |
-| DuckDB analysis layer | Queryable structured data | Not started |
-| Results (§5 of outline) | Findings per RQ1–RQ6 | Not started |
+| Data audit & cleaning report | Hand counts, duplicates, coverage heatmaps in `reports/` | **Done** |
+| Parsing pipeline | Raw → Parquet with documented schema | **Done** (local `data/parsed/`; gitignored) |
+| DuckDB analysis layer | Queryable structured data via metric scripts | **Done** (metrics exported) |
+| Metric CSVs | `reports/metrics_*.csv` (population, position, matchup, player-year, stayers, bb100) | **Done** |
+| RQ5 survivorship | `scripts/compute_survivorship.py` → survivorship + bb100 dispersion CSVs | **Done** (CSV-only) |
+| RQ6 timeline / breaks | `docs/rq6_timeline.md`, `reports/rq6_breakpoints.csv` | **Draft done** |
+| Results (§5 of outline) | Draft bullets in `docs/results_draft.md` | **In progress** |
 | Discussion & conclusions | Interpretation, limitations, contributions | Not started |
-| References & appendices | Metric definitions, model specs, extra tables | Not started |
+| References & appendices | Metric definitions, model specs, extra tables | Partial (`docs/metric_definitions.md`) |
+| All-in EV | Requires hole cards at all-in | **Deferred** |
+| NL200/NL5K `net_won` re-parse | bb100 polish | **Local task** (needs Parquet) |
 
 ---
 
@@ -197,6 +202,7 @@ Full detail: [`outline.md`](./outline.md) §4.
 | 2026-08-11 | Renamed `5k/` → `NL5K/`; archives → `data/raw/` | Naming and layout cleanup |
 | 2026-08-11 | Aligned scope with full study plan (RQ1–RQ6) | Incorporated provided research outline |
 | 2026-08-11 | Inclusion rules: USD only, no cap, 2011–2025 | Cleaner comparable corpus; raw files retained |
+| 2026-09-08 | Status sync: metrics exported; RQ5/RQ6 CSV analysis + draft results | Close analysis gaps that do not need Parquet |
 
 ---
 

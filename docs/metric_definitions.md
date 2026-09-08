@@ -373,7 +373,7 @@ Example: HJ opens, CO calls, BTN raises → BTN 3-bet
 
 ### All-in EV
 
-**Status:** Not implemented. Requires showdown equity (both players' hole cards + board) at the all-in moment. Anonymous hand histories often omit hole cards for folders, so all-in EV is sparse and biased toward showdown hands. Prefer bb/100 as the outcome supporting metric for now.
+**Status:** Deferred / not implemented. Requires showdown equity (both players' hole cards + board) at the all-in moment. Anonymous hand histories often omit hole cards for folders, so all-in EV is sparse and biased toward showdown hands. Prefer bb/100 as the outcome supporting metric for now. Population bb/100 should approximately track rake (`metrics_bb100.csv` rake equiv columns) as a sanity check.
 
 ---
 
@@ -388,6 +388,21 @@ Exported by `scripts/compute_player_year_metrics.py` (default `min_hands=500`, s
 | `metrics_player_stayers.csv` | player × dataset × year | Multi-year players with YoY deltas (`d_*`) |
 
 Rates included: VPIP, PFR, 3-bet, fold-to-3bet, BB defense (fold/call/3-bet), c-bet, bb/100.
+
+---
+
+## Survivorship & breakpoints (RQ5 / RQ6)
+
+Exported by `scripts/compute_survivorship.py` from existing CSVs only (no Parquet).
+
+| File | Grain | Use |
+|------|-------|-----|
+| `metrics_survivorship_summary.csv` | dataset × cohort | Survivor (≥3 years) vs one-year / two-year style means |
+| `metrics_survivorship_by_era.csv` | era × dataset × cohort | Same contrast within 2011–15 / 2016–20 / 2021–25 |
+| `metrics_bb100_dispersion.csv` | dataset × year | Player-year bb/100 mean/median/SD/IQR (≥500 hands) |
+| `rq6_breakpoints.csv` | dataset × metric | Two-piece OLS break-year grid search |
+
+**Cohorts:** `one_year` (1 distinct year), `two_year`, `survivor_3plus` (≥3 years). Style columns include unweighted mean, median, and hand-weighted mean (`hw_mean_*`). **Caveat:** NL50 player-level bb/100 in the panel looks unreliable pending local `net_won` re-parse — prefer NL200/NL5K for outcome contrasts.
 
 ---
 
