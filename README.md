@@ -1,5 +1,15 @@
 # Longitudinal Evolution of Online No-Limit Hold'em Strategy
 
+> **README rewrite pending** (project is moving to anomaly detection). Until then, the run list:
+>
+> ## To do once the data is on this machine
+>
+> 1. Copy `data/parsed/` (Parquet) and the raw `NL50/`, `NL200/`, `NL5K/` folders into the repo root (all gitignored).
+> 2. `python scripts/parse_corpus.py --dataset NL50 --force` — re-parse NL50 with the `net_won` fix.
+> 3. `python scripts/compute_player_year_metrics.py --clear-checkpoint` — fixes NL50 player bb/100 and the c-bet count.
+> 4. `python scripts/check_sessions.py` — can players' sessions be rebuilt? Writes `reports/sessions_*.csv`.
+> 5. Re-run `notebooks/01_player_profiles.ipynb`, then commit the new CSVs.
+
 Empirical study of how PokerStars 6-max NL cash game strategy evolved across **~15 years** and **three stake tiers**, using a large corpus of raw hand histories.
 
 ## Overview

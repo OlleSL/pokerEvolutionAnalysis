@@ -43,3 +43,6 @@ reports/*.json
 
 # DuckDB spill + metrics slice checkpoints (regenerated on demand)
 .tmp/
+
+# External datasets (e.g. Pluribus hands from uoftcprg/phh-dataset)
+data/external/
