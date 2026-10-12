@@ -13,7 +13,7 @@ PokerStars .txt  →  Python parser  →  Parquet tables  →  DuckDB  →  metr
 1. **Store facts, not metrics** — save actions and context; derive VPIP/PFR/c-bet in queries.
 2. **One hand = one row in `hands`** — join everything else on `hand_id`.
 3. **Partition Parquet** by `dataset` and `year` for fast filtering.
-4. **Apply inclusion filters at parse time** — USD only, non-cap, 2011–2025, 6-max (see `scope.md`).
+4. **Apply inclusion filters at parse time** — USD only, non-cap, 2011–2025, 6-max.
 5. **Keep parse errors** in a separate log, not in the main tables.
 
 ---

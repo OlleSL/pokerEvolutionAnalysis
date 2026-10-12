@@ -391,21 +391,6 @@ Rates included: VPIP, PFR, 3-bet, fold-to-3bet, BB defense (fold/call/3-bet), c-
 
 ---
 
-## Survivorship & breakpoints (RQ5 / RQ6)
-
-Exported by `scripts/compute_survivorship.py` from existing CSVs only (no Parquet).
-
-| File | Grain | Use |
-|------|-------|-----|
-| `metrics_survivorship_summary.csv` | dataset × cohort | Survivor (≥3 years) vs one-year / two-year style means |
-| `metrics_survivorship_by_era.csv` | era × dataset × cohort | Same contrast within 2011–15 / 2016–20 / 2021–25 |
-| `metrics_bb100_dispersion.csv` | dataset × year | Player-year bb/100 mean/median/SD/IQR (≥500 hands) |
-| `rq6_breakpoints.csv` | dataset × metric | Two-piece OLS break-year grid search |
-
-**Cohorts:** `one_year` (1 distinct year), `two_year`, `survivor_3plus` (≥3 years). Style columns include unweighted mean, median, and hand-weighted mean (`hw_mean_*`). **Caveat:** NL50 player-level bb/100 in the panel looks unreliable pending local `net_won` re-parse — prefer NL200/NL5K for outcome contrasts.
-
----
-
 ## Implementation checklist
 
 - Join `hands.bb` for all preflop price thresholds (never hard-code stakes)

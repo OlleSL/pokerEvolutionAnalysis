@@ -597,7 +597,7 @@ def metric_bb100(con: duckdb.DuckDBPyConnection) -> list[Check]:
     checks.append(Check(
         "net_won zero-sum (<5% bad hands)",
         zs < 5.0,
-        f"{zs}% bad — re-run parse_sample.py after net_won fix",
+        f"{zs}% bad — re-run parse_corpus.py --force after net_won fix",
     ))
 
     rows = con.execute(
@@ -912,7 +912,7 @@ def main() -> None:
     root = args.path
 
     if not (root / "hands").exists():
-        print(f"No parsed data at {root}. Run: python scripts/parse_sample.py")
+        print(f"No parsed data at {root}. Run: python scripts/parse_corpus.py")
         sys.exit(1)
 
     hands_g = parquet_glob(root, "hands")

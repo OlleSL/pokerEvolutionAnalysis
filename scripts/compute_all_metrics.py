@@ -924,7 +924,7 @@ def main() -> None:
     out_dir: Path = args.output_dir
 
     if not (root / "hands").exists():
-        print(f"No parsed data at {root}. Run parse_corpus.py or parse_sample.py first.")
+        print(f"No parsed data at {root}. Run parse_corpus.py first.")
         sys.exit(1)
 
     hands_g = parquet_glob(root, "hands")
