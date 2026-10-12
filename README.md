@@ -1,4 +1,4 @@
-# Longitudinal Evolution of Online No-Limit Hold'em Strategy
+# Poker Anomaly Detection
 
 > **README rewrite pending** (project is moving to anomaly detection). Until then, the run list:
 >
@@ -131,7 +131,7 @@ Outputs go to `reports/`.
 ## Project layout
 
 ```
-dataAnalysisProject/
+poker-anomaly-detection/
 ├── README.md           # This file
 ├── scope.md            # Project scope
 ├── outline.md          # Study outline + tracker
