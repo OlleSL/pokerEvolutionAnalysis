@@ -60,7 +60,7 @@ raw .txt  →  parse_corpus.py  →  Parquet (data/parsed/)
 Requires **Python 3.12+**.
 
 ```powershell
-cd C:\Users\olles\code\dataAnalysisProject
+cd D:\GitHub\poker-anomaly-detection
 
 # Create / activate virtual environment
 python -m venv .venv
