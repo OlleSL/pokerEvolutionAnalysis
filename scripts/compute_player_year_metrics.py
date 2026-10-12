@@ -135,8 +135,9 @@ SELECT
     ROUND(100.0 * COUNT(*) FILTER (WHERE bd.response = 'raise')
           / NULLIF(COUNT(*) FILTER (WHERE bd.hand_id IS NOT NULL), 0), 2) AS bb_three_bet_pct,
     COUNT(*) FILTER (WHERE co.hand_id IS NOT NULL) AS cbet_opps,
-    COUNT(*) FILTER (WHERE ch.hand_id IS NOT NULL) AS cbets,
-    ROUND(100.0 * COUNT(*) FILTER (WHERE ch.hand_id IS NOT NULL)
+    -- Only count a flop bet as a c-bet when the hand was a c-bet opportunity
+    COUNT(*) FILTER (WHERE ch.hand_id IS NOT NULL AND co.hand_id IS NOT NULL) AS cbets,
+    ROUND(100.0 * COUNT(*) FILTER (WHERE ch.hand_id IS NOT NULL AND co.hand_id IS NOT NULL)
           / NULLIF(COUNT(*) FILTER (WHERE co.hand_id IS NOT NULL), 0), 2) AS cbet_pct,
     ROUND(100.0 * SUM(pp.net_won / h.bb) / COUNT(*), 2) AS bb100
 FROM primary_hands h

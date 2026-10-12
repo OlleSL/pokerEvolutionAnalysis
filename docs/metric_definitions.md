@@ -348,12 +348,11 @@ Example: HJ opens, CO calls, BTN raises → BTN 3-bet
 ### BTN vs BB
 
 - BB first response facing a **BTN open raise** (fold / call / 3-bet)
-- Exported in `reports/metrics_matchups.csv` (`btn_bb_*` columns)
 
 ### SB first-in
 
 - When folded to the SB: **raise / limp / fold**
-- Exported as `sb_raise_pct`, `sb_limp_pct`, `sb_fold_pct` in the same matchups file
+- Columns `sb_raise_pct`, `sb_limp_pct`, `sb_fold_pct`
 
 ### BB defense
 
@@ -363,7 +362,7 @@ Example: HJ opens, CO calls, BTN raises → BTN 3-bet
 ### 3-bet sizing
 
 - Size of 3-bet in big blinds (`amount / bb`)
-- `avg_3bet_size_bb`, `median_3bet_size_bb`, and average excluding large shoves (`< 8 BB`) in `metrics_3bet_sizing.csv`
+- `avg_3bet_size_bb`, `median_3bet_size_bb`, and average excluding large shoves (`< 8 BB`)
 
 ### River c-bet vs triple barrel
 
