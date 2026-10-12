@@ -7,7 +7,7 @@ numpy>=1.26
 # Visualization & reporting
 matplotlib>=3.8
 
-# Exploratory analysis (survivorship, breakpoints, clustering)
+# Anomaly detection (Isolation Forest, LOF, PCA)
 scikit-learn>=1.4
 
 # Notebooks (EDA + results)
